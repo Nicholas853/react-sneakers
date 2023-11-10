@@ -8,7 +8,7 @@ function App() {
           <div className="ml-15">
             <h3 className="text-uppercase">React Sneakers</h3>
             <p className="opacity-5">Магазин найкращих кросівок</p>
-          </div>
+          </div> 
         </div>
         <ul className="d-flex">
           <li className="mr-30">
@@ -20,14 +20,23 @@ function App() {
           </li>
         </ul>
       </header>
-      <div className="content p-40">
-        <h1>
-          Всі кросівки
-        </h1>
 
+      <div className="content p-40">
+        <div className= "mb-40 d-flex align-center justify-between">
+          <h1>
+            Всі кросівки
+          </h1>
+          <div className="search-block d-flex">
+            <img src="/img/search.svg" alt="Search" />
+            <input type="text" placeholder="Пошук..."/>
+          </div>
+        </div>
 
        <div className="d-flex justify-between">
           <div className="card">
+            <div className="favorite">
+              <img src="/img/heart-unliked.svg" alt="Unliked"/>
+            </div>
             <img width={133} height={112} src="/img/sneakers/2.jpg"/>
             <h5>Чоловічі Кросівки Nike Blazer Mid Suede</h5>
             <div className="d-flex justify-between align-center">
