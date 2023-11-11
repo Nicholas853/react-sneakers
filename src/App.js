@@ -1,16 +1,31 @@
-import Card from "./components/Card";
+import Card from "./components/Card/Card";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
 
 function App() {
   const arr = [
-    {name: 'Чоловічі Кросівки Nike Blazer Mid Suede', price: 12999 },
-    {name: 'Чоловічі Кросівки Nike Air Max 270', price: 12999 },
-    {name: 'Чоловічі Кросівки Nike Blazer Mid Suede', price: 8499 },
-    {name: 'Кросівки Puma X Aka Boku Future Rider', price: 8999 },
-    {name: 'Чоловічі Кросівки Under Armour Curry 8', price: 15199 },
-    {name: 'Чоловічі Кросівки Nike Kyrie 7', price: 11299 },
-    {name: 'Чоловічі Кросівки Jordan Air Jordan 11', price: 10799  },
+    {
+      title: 'Чоловічі Кросівки Nike Blazer Mid Suede', 
+      price: 12999,
+      imageUrl: "/img/sneakers/1.jpg"
+    },
+    {
+      title: 'Чоловічі Кросівки Nike Air Max 270', 
+      price: 12999,
+      imageUrl: "/img/sneakers/2.jpg"
+    },
+    {
+      title: 'Чоловічі Кросівки Nike Blazer Mid Suede', 
+      price: 8499,
+      imageUrl: "/img/sneakers/3.jpg"
+    },
+    {
+      title: 'Кросівки Puma X Aka Boku Future Rider', 
+      price: 8499,
+      imageUrl: "/img/sneakers/4.jpg"
+    },
+    
+   
   ]
 
 
@@ -31,8 +46,16 @@ function App() {
         </div>
 
        <div className="d-flex justify-between">
-           <Card />
-
+          {
+            arr.map((obj) => (
+              <Card 
+                title={obj.title}
+                price={obj.price}
+                imageUrl={obj.imageUrl}
+                onClick={console.log(obj)}
+              />
+            ))
+          }
        </div>
       </div>
     </div>
