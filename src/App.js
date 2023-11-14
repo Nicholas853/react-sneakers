@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 
 function App() {
   const [items, setItems] = useState([]);
+  const [cardItems, setCardItems] = useState([]);
   const [cartOpened, setCartOpened] = useState(false);
 
   useEffect(() => {
@@ -17,10 +18,20 @@ function App() {
     });
   }, []);
   
+  const onAddToCart = (obj) => {
+   setCardItems(prev => [...prev, obj]) 
+  }
+
 
   return (
     <div className="wrapper clear">
-      {cartOpened && <Drawer onCloseCart={() => setCartOpened(false)}/>}
+      {cartOpened && 
+        <Drawer 
+          onCloseCart={() => setCartOpened(false)}
+          items={cardItems}
+        />
+      }
+      
       <Header 
         onClickCart={() => setCartOpened(true)}
       />
@@ -38,11 +49,12 @@ function App() {
 
        <div className="d-flex flex-wrap">
           {
-            items.map((obj) => (
+            items.map((item) => (
               <Card 
-                title={obj.title}
-                price={obj.price}
-                imageUrl={obj.imageUrl}
+                title={item.title}
+                price={item.price}
+                imageUrl={item.imageUrl}
+                onPlus={(obj) => onAddToCart(obj)}
               />
             ))
           }
