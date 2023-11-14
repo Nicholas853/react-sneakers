@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 function App() {
   const [items, setItems] = useState([]);
   const [cardItems, setCardItems] = useState([]);
+  const [searchValue, setSearchValue] = useState([]);
   const [cartOpened, setCartOpened] = useState(false);
 
   useEffect(() => {
@@ -20,6 +21,10 @@ function App() {
   
   const onAddToCart = (obj) => {
    setCardItems(prev => [...prev, obj]) 
+  }
+
+  const onChangeSearchInput = (event) => {
+     setSearchValue(event.target.value);
   }
 
 
@@ -39,18 +44,22 @@ function App() {
       <div className="content p-40">
         <div className= "mb-40 d-flex align-center justify-between">
           <h1>
-            Всі кросівки
+            {searchValue ? `Пошук по запиту: "${searchValue}"` : 'Всі кросівки'}
           </h1>
           <div className="search-block d-flex">
             <img src="/img/search.svg" alt="Search" />
-            <input type="text" placeholder="Пошук..."/>
+            {searchValue && <img onClick={() => setSearchValue('')} className="clear btnRemove cu-p" src="/img/btn-remove.svg" alt="Close" />}
+            <input onChange={onChangeSearchInput} value={searchValue} type="text" placeholder="Пошук..."/>
           </div>
         </div>
 
        <div className="d-flex flex-wrap">
           {
-            items.map((item) => (
+            items
+            .filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()))
+            .map((item) => (
               <Card 
+                key={item.id}
                 title={item.title}
                 price={item.price}
                 imageUrl={item.imageUrl}
