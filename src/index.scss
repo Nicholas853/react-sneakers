@@ -77,6 +77,12 @@ p{
     }
 }
 
+.cart{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .cartTotalBlock{
   ul{
     margin-bottom: 40px !important;
@@ -128,6 +134,35 @@ p{
   &:active{
     background-color: darken($color: #9dd558, $amount: 5%);
   }
+}
+.cartEmpty{
+  text-align: center;
+
+  p{
+    width: 285px;
+    line-height: 24px;
+    margin-top: 6px;
+  }
+  
+  .greenButton{
+    width: 245px;
+    margin-top: 20px;
+
+    &:hover{
+      img{
+        transform: rotate(180deg) translateX(3px);
+      }
+    }
+
+    img{
+      position: relative;
+      top: 1px;
+      transform: rotate(180deg);
+      margin-right: 15px;
+      transition: transform 0.15s ease-in-out;
+    }
+  }
+
 }
 
 .cartItem{

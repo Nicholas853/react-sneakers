@@ -1,3 +1,5 @@
+import React from "react";
+import axios from "axios";
 import Card from "./components/Card/Card";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
@@ -5,22 +7,27 @@ import { useState, useEffect } from "react";
 
 function App() {
   const [items, setItems] = useState([]);
-  const [cardItems, setCardItems] = useState([]);
-  const [searchValue, setSearchValue] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
   const [cartOpened, setCartOpened] = useState(false);
 
   useEffect(() => {
-    fetch('https://655358665449cfda0f2e8750.mockapi.io/items')
-    .then(res => {
-      return res.json()
-    })
-    .then(json => {
-      setItems(json)
+    axios.get('https://655358665449cfda0f2e8750.mockapi.io/items').then((res) => {
+      setItems(res.data);
+    });
+    axios.get('https://655358665449cfda0f2e8750.mockapi.io/cart').then((res) => {
+      setCartItems(res.data);
     });
   }, []);
   
   const onAddToCart = (obj) => {
-   setCardItems(prev => [...prev, obj]) 
+    axios.post('https://655358665449cfda0f2e8750.mockapi.io/cart', obj);
+    setCartItems(prev => [...prev, obj]) 
+  }  
+
+  const onRemoveItem = (id) => {
+    axios.delete(`https://655358665449cfda0f2e8750.mockapi.io/cart/${id}`);
+    setCartItems(prev => prev.filter(item => item.id !== id)) 
   }
 
   const onChangeSearchInput = (event) => {
@@ -33,7 +40,8 @@ function App() {
       {cartOpened && 
         <Drawer 
           onCloseCart={() => setCartOpened(false)}
-          items={cardItems}
+          items={cartItems}
+          onRemove={onRemoveItem}
         />
       }
       
@@ -48,7 +56,7 @@ function App() {
           </h1>
           <div className="search-block d-flex">
             <img src="/img/search.svg" alt="Search" />
-            {searchValue && <img onClick={() => setSearchValue('')} className="clear btnRemove cu-p" src="/img/btn-remove.svg" alt="Close" />}
+            {searchValue && <img onClick={() => setSearchValue("")} className="clear btnRemove cu-p" src="/img/btn-remove.svg" alt="Close" />}
             <input onChange={onChangeSearchInput} value={searchValue} type="text" placeholder="Пошук..."/>
           </div>
         </div>
