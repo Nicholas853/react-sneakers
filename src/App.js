@@ -1,10 +1,11 @@
 import React from "react";
 import { Route, Routes } from 'react-router-dom';
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
 import Home from "./pages/Home";
-import { useState, useEffect } from "react";
+import Favorites from "./pages/Favorites";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -35,10 +36,17 @@ function App() {
     setCartItems(prev => prev.filter(item => item.id !== id)) 
   }
 
-  const onAddToFavorite = (obj) => {
-    console.log(obj);
-    axios.post('https://6555f3db84b36e3a431eb65b.mockapi.io/favorites', obj);
-    setFavorites(prev => [...prev, obj]) 
+  const onAddToFavorite = async (obj) => {
+    try {
+      if (favorites.find((favObj) => favObj.id === obj.id)){
+        axios.delete(`https://6555f3db84b36e3a431eb65b.mockapi.io/favorites/${obj.id}`);
+      } else{
+        const { data } = await axios.post('https://6555f3db84b36e3a431eb65b.mockapi.io/favorites', obj);
+        setFavorites((prev) => [...prev, data]);
+      }
+    } catch (error) {
+      alert('Не вдалося додати в уподобані');
+    }
   }
 
   const onChangeSearchInput = (event) => {
@@ -70,6 +78,15 @@ function App() {
             setSearchValue={setSearchValue}
             onChangeSearchInput={onChangeSearchInput}
             onAddToCart={onAddToCart}
+            onAddToFavorite={onAddToFavorite}
+          />
+        } 
+      />
+      <Route 
+        path="/favorites" 
+        element={
+          <Favorites 
+            items={favorites}
             onAddToFavorite={onAddToFavorite}
           />
         } 
