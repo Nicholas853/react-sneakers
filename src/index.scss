@@ -18,6 +18,14 @@ body {
 }
 header{
   border-bottom: 1px solid #EAEAEA;
+  .favorite{
+    color: #5C5C5C;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+  }
 }
 h3,
 p{
