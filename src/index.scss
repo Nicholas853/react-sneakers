@@ -204,3 +204,43 @@ p{
     }
   }
 }
+
+.favoritesEmpty{
+  height: 70vh;
+  text-align: center;
+  
+  h2{
+    margin: 0;
+  }
+  p{
+    width: 290px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    opacity: 0.4;
+    margin-top: 5px;
+  }
+  
+  .greenButton{
+    width: 245px;
+    margin-top: 70px;
+
+    &:hover{
+      img{
+        transform: rotate(180deg) translateX(3px);
+      }
+    }
+
+    img{
+      position: relative;
+      top: 1px;
+      transform: rotate(180deg);
+      margin-right: 15px;
+      transition: transform 0.15s ease-in-out;
+    }
+  }
+
+}
