@@ -15,19 +15,20 @@ function App() {
   const [cartOpened, setCartOpened] = useState(false);
 
   useEffect(() => {
-    axios.get('https://655358665449cfda0f2e8750.mockapi.io/items').then((res) => {
-      setItems(res.data);
-    });
-    axios.get('https://655358665449cfda0f2e8750.mockapi.io/cart').then((res) => {
-      setCartItems(res.data);
-    });
-    axios.get('https://6555f3db84b36e3a431eb65b.mockapi.io/favorites').then((res) => {
-      setFavorites(res.data);
-    });
+   async function fetchData() {
+     const cartResponse = await axios.get('https://655358665449cfda0f2e8750.mockapi.io/cart');
+     const favoritesResponse = await axios.get('https://6555f3db84b36e3a431eb65b.mockapi.io/favorites');
+     const itemsResponse = await axios.get('https://655358665449cfda0f2e8750.mockapi.io/items');
+
+     setCartItems(cartResponse.data);
+     setFavorites(favoritesResponse.data);
+     setItems(itemsResponse.data);
+   }
+
+   fetchData();
   }, []);
   
   const onAddToCart = (obj) => {
-    console.log(obj);
     try {
       if (cartItems.find((item) => Number(item.id) === Number(obj.id))){
         axios.delete(`https://655358665449cfda0f2e8750.mockapi.io/cart/${obj.id}`);
@@ -48,8 +49,9 @@ function App() {
 
   const onAddToFavorite = async (obj) => {
     try {
-      if (favorites.find((favObj) => favObj.id === obj.id)){
+      if (favorites.find((favObj) => Number(favObj.id) === Number(obj.id))){
         axios.delete(`https://6555f3db84b36e3a431eb65b.mockapi.io/favorites/${obj.id}`);
+        setFavorites((prev) => prev.filter((item) => Number(item.id) !== Number(obj.id)));
       } else{
         const { data } = await axios.post('https://6555f3db84b36e3a431eb65b.mockapi.io/favorites', obj);
         setFavorites((prev) => [...prev, data]);
@@ -84,6 +86,7 @@ function App() {
         element={
           <Home
             items={items}
+            cartItems={cartItems}
             searchValue={searchValue}
             setSearchValue={setSearchValue}
             onChangeSearchInput={onChangeSearchInput}
