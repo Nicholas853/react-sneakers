@@ -7,8 +7,30 @@ function Home({
     setSearchValue,
     onChangeSearchInput,
     onAddToCart,
-    onAddToFavorite
+    onAddToFavorite,
+    isLoading,
 }) {
+    const renderItems = () => {
+      const skeletonArray = Array.from({ length: 8 }, (_, index) => ({
+        id: index + 1, 
+      }));
+
+      const filtredItems = items.filter((item) => 
+        item.title.toLowerCase().includes(searchValue.toLowerCase())
+      );
+      return  (isLoading ? skeletonArray : filtredItems).map((item) => (
+        <Card 
+          key={item.id}
+          onPlus={(obj) => onAddToCart(obj)}
+          onFavorite={(obj) => onAddToFavorite(obj)}
+          added={cartItems.some((obj) => Number(obj.id) === Number(item.id))}
+          loading={isLoading}
+          {... item}
+        />
+      ));
+    };
+
+
     return (
       <div className="content p-40">
         <div className= "mb-40 d-flex align-center justify-between">
@@ -21,21 +43,9 @@ function Home({
             <input onChange={onChangeSearchInput} value={searchValue} type="text" placeholder="Пошук..."/>
           </div>
         </div> 
-        {console.log(items, cartItems)}
+
         <div className="d-flex flex-wrap">
-            {
-              items
-              .filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase()))
-              .map((item) => (
-                <Card 
-                  key={item.id}
-                  onPlus={(obj) => onAddToCart(obj)}
-                  onFavorite={(obj) => onAddToFavorite(obj)}
-                  added={cartItems.some((obj) => Number(obj.id) === Number(item.id))}
-                  {... item}
-                />
-              ))
-            }
+            { renderItems() }
         </div>
       </div>
     )
