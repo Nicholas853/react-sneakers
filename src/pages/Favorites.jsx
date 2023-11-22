@@ -1,10 +1,15 @@
-import { Link } from 'react-router-dom';
+import React from "react";
 import Card from "../components/Card/Card";
+import { Link } from 'react-router-dom';
+import AppContext from "../context";
+import { useContext } from 'react';
 
-function Favorites({ items, onAddToFavorite }) {
+function Favorites({ onAddToFavorite }) {
+    const {favorites} = useContext(AppContext);
+
     return (
         <div className="content p-40">
-        {items.length ?
+        {favorites.length ?
         <div>
           <div className= "mb-40 d-flex align-center justify-between">
             <h1>
@@ -14,7 +19,7 @@ function Favorites({ items, onAddToFavorite }) {
 
           <div className="d-flex flex-wrap">
           {
-            items.map((item) => (
+            favorites.map((item) => (
               <Card 
                 key={item.id}
                 favorited={true}

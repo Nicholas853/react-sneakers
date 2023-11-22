@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import axios from "axios";
+import AppContext from "./context";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
 import Home from "./pages/Home";
@@ -71,7 +72,8 @@ function App() {
 
 
   return (
-    <div className="wrapper clear">
+   <AppContext.Provider value={{items, cartItems, favorites}}>
+     <div className="wrapper clear">
       {cartOpened && 
         <Drawer 
           onCloseCart={() => setCartOpened(false)}
@@ -103,7 +105,6 @@ function App() {
         path="/favorites" 
         element={
           <Favorites 
-            items={favorites}
             onAddToFavorite={onAddToFavorite}
           />
         } 
@@ -111,6 +112,7 @@ function App() {
     </Routes>
 
     </div>
+   </AppContext.Provider>
   );
 }
 
