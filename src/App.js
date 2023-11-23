@@ -4,9 +4,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import AppContext from "./context";
 import Header from "./components/Header";
-import Drawer from "./components/Drawer";
+import Drawer from "./components/Drawer/Drawer";
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
+import Orders from "./pages/Orders";
+
 
 function App() {
   const [items, setItems] = useState([]);
@@ -76,15 +78,23 @@ function App() {
 
 
   return (
-   <AppContext.Provider value={{items, cartItems, favorites, onAddToFavorite, onAddToCart, isItemAdded, setCartOpened, setCartItems}}>
+   <AppContext.Provider value={{
+      items, 
+      cartItems, 
+      favorites, 
+      onAddToFavorite, 
+      onAddToCart,
+      isItemAdded, 
+      setCartOpened, 
+      setCartItems
+    }}>
      <div className="wrapper clear">
-      {cartOpened && 
-        <Drawer 
-          onCloseCart={() => setCartOpened(false)}
-          items={cartItems}
-          onRemove={onRemoveItem}
-        />
-      }
+      <Drawer 
+        items={cartItems}
+        onCloseCart={() => setCartOpened(false)}
+        onRemove={onRemoveItem}
+        opened={cartOpened}
+      />
       
       <Header 
         onClickCart={() => setCartOpened(true)}
@@ -109,6 +119,12 @@ function App() {
         path="/favorites" 
         element={
           <Favorites />
+        } 
+      />
+      <Route 
+        path="/orders" 
+        element={
+          <Orders />
         } 
       />
     </Routes>

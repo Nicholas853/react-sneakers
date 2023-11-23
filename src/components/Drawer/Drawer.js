@@ -1,16 +1,20 @@
-import { useContext, useState } from "react";
-import Info from "./Info";
-import AppContext from "../context";
+import { useState } from "react";
 import axios from 'axios';
+
+import Info from "../Info";
+import { useCart } from "../../hooks/useCart";
+
+import styles from "./Drawer.module.scss"
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-function Drawer({onCloseCart, onRemove, items = []}) {
-    const {cartItems, setCartItems} = useContext(AppContext);
-
+function Drawer({onCloseCart, onRemove, items = [], opened }) {
+    const { cartItems, setCartItems, totalPrice} = useCart(); 
     const [orderId, setOrderId] = useState(null);
     const [isOrderComplete, setIsOrderComplete] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+
+
 
 
     const onClickOrder = async () => {
@@ -35,8 +39,8 @@ function Drawer({onCloseCart, onRemove, items = []}) {
     }
 
     return(
-      <div className="overlay">
-        <div className="drawer p-30">
+      <div className={`${styles.overlay} ${opened ? styles.overlayVisible : ''}`}>
+        <div className={`${styles.drawer} p-30`}>
           <h2 className="mb-30 d-flex justify-between">
             Кошик
             <img onClick={onCloseCart} className="btnRemove cu-p" src="/img/btn-remove.svg" alt="Remove" />
@@ -71,12 +75,12 @@ function Drawer({onCloseCart, onRemove, items = []}) {
                     <li className="d-flex">
                       <span>Всього:</span>
                       <div></div>
-                      <b>21 498 грн.</b>
+                      <b>{totalPrice} грн.</b>
                     </li>
                     <li className="d-flex">
                       <span>Податок 5%</span>
                       <div></div>
-                      <b>1074 грн</b>
+                      <b>{Math.round(totalPrice * 0.05)} грн.</b>
                     </li>
                   </ul>
                   <button disabled={isLoading} onClick={onClickOrder} className="greenButton">Оформити замовлення  <img src="/img/arrow.svg" alt="Arrow" /></button>
