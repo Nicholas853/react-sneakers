@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import AppContext from "../context";
 import { useContext } from 'react';
 
-function Favorites({ onAddToFavorite }) {
-    const {favorites} = useContext(AppContext);
+function Favorites() {
+    const {favorites, onAddToFavorite, onAddToCart} = useContext(AppContext);
 
     return (
         <div className="content p-40">
@@ -24,9 +24,9 @@ function Favorites({ onAddToFavorite }) {
                 key={item.id}
                 favorited={true}
                 onFavorite={onAddToFavorite}
+                onPlus={(obj) => onAddToCart(obj)}
+
                 {... item} // Конкатинація - спосіб, при якому всі значення item передаються. Краще використовувати замість того, щоб вручну прописувати title={obj.title} і т.д.ы
-                // onPlus={(obj) => onAddToCart(obj)}
-                // onFavorite={(obj) => onAddToFavorite(obj)}
               />   
               ))
             }    

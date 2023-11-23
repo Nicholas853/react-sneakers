@@ -44,12 +44,12 @@ function App() {
     } catch (error) {
       
     }
-  }  
+  };
 
   const onRemoveItem = (id) => {
     axios.delete(`https://655358665449cfda0f2e8750.mockapi.io/cart/${id}`);
     setCartItems(prev => prev.filter(item => item.id !== id)) 
-  }
+  };
 
   const onAddToFavorite = async (obj) => {
     try {
@@ -63,16 +63,20 @@ function App() {
     } catch (error) {
       alert('Не вдалося додати в уподобані');
     }
-  }
+  };
 
   const onChangeSearchInput = (event) => {
      setSearchValue(event.target.value);
-  }
+  };
+
+  const isItemAdded = (id) => {
+    return cartItems.some((obj) => Number(obj.id) === Number(id));
+  };
 
 
 
   return (
-   <AppContext.Provider value={{items, cartItems, favorites}}>
+   <AppContext.Provider value={{items, cartItems, favorites, onAddToFavorite, onAddToCart, isItemAdded}}>
      <div className="wrapper clear">
       {cartOpened && 
         <Drawer 
@@ -104,9 +108,7 @@ function App() {
       <Route 
         path="/favorites" 
         element={
-          <Favorites 
-            onAddToFavorite={onAddToFavorite}
-          />
+          <Favorites />
         } 
       />
     </Routes>

@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import Card from "../components/Card/Card";
+import AppContext from "../context";
 
 function Home({
     items,
@@ -23,13 +25,14 @@ function Home({
           key={item.id}
           onPlus={(obj) => onAddToCart(obj)}
           onFavorite={(obj) => onAddToFavorite(obj)}
-          added={cartItems.some((obj) => Number(obj.id) === Number(item.id))}
+          added={isItemAdded(item && item.id)}
           loading={isLoading}
           {... item}
         />
       ));
     };
 
+    const {isItemAdded} = useContext(AppContext);
 
     return (
       <div className="content p-40">
