@@ -20,37 +20,50 @@ function App() {
 
   useEffect(() => {
    async function fetchData() {
-     const cartResponse = await axios.get('https://655358665449cfda0f2e8750.mockapi.io/cart');
-     const favoritesResponse = await axios.get('https://6555f3db84b36e3a431eb65b.mockapi.io/favorites');
-     const itemsResponse = await axios.get('https://655358665449cfda0f2e8750.mockapi.io/items');
+     try {
+      const [ cartResponse, favoritesResponse, itemsResponse ] = await Promise.all([
+        axios.get('https://655358665449cfda0f2e8750.mockapi.io/cart'),
+        axios.get('https://6555f3db84b36e3a431eb65b.mockapi.io/favorites'),
+        axios.get('https://655358665449cfda0f2e8750.mockapi.io/items')
+      ]);
 
-     setIsLoading(false);
+      setIsLoading(false);
 
-     setCartItems(cartResponse.data);
-     setFavorites(favoritesResponse.data);
-     setItems(itemsResponse.data);
+      setCartItems(cartResponse.data);
+      setFavorites(favoritesResponse.data);
+      setItems(itemsResponse.data);
+     } catch (error) {
+      alert("Помилка при запиті даних!");
+      console.error(error);
+     }
    }
 
-   fetchData();
+   fetchData(); 
   }, []);
   
-  const onAddToCart = (obj) => {
+  const onAddToCart = async (obj) => {
     try {
       if (cartItems.find((item) => Number(item.id) === Number(obj.id))){
-        axios.delete(`https://655358665449cfda0f2e8750.mockapi.io/cart/${obj.id}`);
         setCartItems(prev => prev.filter(item => Number(item.id) !== Number(obj.id)));
+        await axios.delete(`https://655358665449cfda0f2e8750.mockapi.io/cart/${obj.id}`);
       } else{
-        axios.post('https://655358665449cfda0f2e8750.mockapi.io/cart', obj);
         setCartItems(prev => [...prev, obj]);
+        await axios.post('https://655358665449cfda0f2e8750.mockapi.io/cart', obj);
       }
     } catch (error) {
-      
+      alert("Помилка при додаванні товару у кошик!");
+      console.error(error);
     }
   };
 
-  const onRemoveItem = (id) => {
-    axios.delete(`https://655358665449cfda0f2e8750.mockapi.io/cart/${id}`);
-    setCartItems(prev => prev.filter(item => item.id !== id)) 
+  const onRemoveItem = async (id) => {
+    try {
+      setCartItems(prev => prev.filter(item => item.id !== id))
+      await axios.delete(`https://655358665449cfda0f2e8750.mockapi.io/cart/${id}`);
+    } catch (error) {
+      alert("Помилка при видаленні товару з кошика!");
+      console.error(error);
+    } 
   };
 
   const onAddToFavorite = async (obj) => {
@@ -64,6 +77,7 @@ function App() {
       }
     } catch (error) {
       alert('Не вдалося додати в уподобані');
+      console.error(error);
     }
   };
 
