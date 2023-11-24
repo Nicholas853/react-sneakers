@@ -43,7 +43,7 @@ function Drawer({onCloseCart, onRemove, items = [], opened }) {
         <div className={`${styles.drawer} p-30`}>
           <h2 className="mb-30 d-flex justify-between">
             Кошик
-            <img onClick={onCloseCart} className="btnRemove cu-p" src="/img/btn-remove.svg" alt="Remove" />
+            <img onClick={onCloseCart} className="btnRemove cu-p" src="img/btn-remove.svg" alt="Remove" />
           </h2>
           
           {
@@ -83,13 +83,13 @@ function Drawer({onCloseCart, onRemove, items = [], opened }) {
                       <b>{Math.round(totalPrice * 0.05)} грн.</b>
                     </li>
                   </ul>
-                  <button disabled={isLoading} onClick={onClickOrder} className="greenButton">Оформити замовлення  <img src="/img/arrow.svg" alt="Arrow" /></button>
+                  <button disabled={isLoading} onClick={onClickOrder} className="greenButton">Оформити замовлення  <img src="img/arrow.svg" alt="Arrow" /></button>
                 </div>
               </div>
               :
               <Info 
                 title={isOrderComplete ? "Замовлення оформлено!" : "Кошик порожній"}
-                image={isOrderComplete ? "./img/complete-order.png" : "./img/cart-empty.png"}
+                image={isOrderComplete ? "img/complete-order.png" : "img/cart-empty.png"}
                 description={isOrderComplete ? `Ваше замовлення #${orderId} скоро буде передано кур'єрській доставці` : "Додайте хоча б одну пару кросівок, щоб зробити замовлення."}
               />
           }

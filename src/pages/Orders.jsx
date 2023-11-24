@@ -55,12 +55,12 @@ function Orders() {
             </div> 
             {/* : */}
             {/* <div className="favoritesEmpty d-flex align-center justify-center flex-column flex">
-                <img width={70} height={70} src="./img/orders-empty.png" alt="Empty box" />
+                <img width={70} height={70} src="img/orders-empty.png" alt="Empty box" />
                 <h2>У вас немає замовлення</h2>
                 <p>Оформіть хоча б одне замовлення.</p>
                 <Link to={'/'}>
                     <button className="greenButton">
-                    <img src="/img/arrow.svg" alt="Arrow"/>Повернутись назад
+                    <img src="img/arrow.svg" alt="Arrow"/>Повернутись назад
                     </button>
                 </Link>
             </div> */}

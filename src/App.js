@@ -48,6 +48,7 @@ function App() {
         setCartItems(prev => prev.filter(item => Number(item.parentId) !== Number(obj.id)));
         await axios.delete(`https://655358665449cfda0f2e8750.mockapi.io/cart/${findItem.id}`);
       } else{
+
         setCartItems(prev => [...prev, obj]);
         const { data } = await axios.post('https://655358665449cfda0f2e8750.mockapi.io/cart', obj);
         setCartItems(prev => prev.map((item) => {
@@ -79,9 +80,9 @@ function App() {
 
   const onAddToFavorite = async (obj) => {
     try {
-      if (favorites.find((favObj) => Number(favObj.parentId) === Number(obj.id))){
+      if (favorites.find((favObj) => Number(favObj.id) === Number(obj.id))){
         axios.delete(`https://6555f3db84b36e3a431eb65b.mockapi.io/favorites/${obj.id}`);
-        setFavorites((prev) => prev.filter((item) => Number(item.parentId) !== Number(obj.id)));
+        setFavorites((prev) => prev.filter((item) => Number(item.id) !== Number(obj.id)));
       } else{
         const { data } = await axios.post('https://6555f3db84b36e3a431eb65b.mockapi.io/favorites', obj);
         setFavorites((prev) => [...prev, data]);
@@ -126,7 +127,7 @@ function App() {
       />
      <Routes>
       <Route 
-        path="/" 
+        path="" 
         element={
           <Home
             items={items}
@@ -141,13 +142,13 @@ function App() {
         } 
       />
       <Route 
-        path="/favorites" 
+        path="favorites" 
         element={
           <Favorites />
         } 
       />
       <Route 
-        path="/orders" 
+        path="orders" 
         element={
           <Orders />
         } 
