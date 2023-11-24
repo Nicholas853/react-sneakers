@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Nicholas853/react-sneakers/static/css/main.ca381daf.css",
+    "main.js": "/Nicholas853/react-sneakers/static/js/main.9d9a4d58.js",
+    "index.html": "/Nicholas853/react-sneakers/index.html",
+    "main.ca381daf.css.map": "/Nicholas853/react-sneakers/static/css/main.ca381daf.css.map",
+    "main.9d9a4d58.js.map": "/Nicholas853/react-sneakers/static/js/main.9d9a4d58.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ca381daf.css",
+    "static/js/main.9d9a4d58.js"
+  ]
+}
