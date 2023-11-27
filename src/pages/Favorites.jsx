@@ -37,7 +37,7 @@ function Favorites() {
           <img width={70} height={70} src="img/favorites-empty.png" alt="Empty box" />
           <h2>Уподобаних кросівок немає</h2>
           <p>Ви нічого не додавали в уподобане</p>
-          <Link to={'/'}>
+          <Link to={''}>
             <button className="greenButton">
               <img src="img/arrow.svg" alt="Arrow"/>Повернутись назад
             </button>
